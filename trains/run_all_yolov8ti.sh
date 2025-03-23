@@ -1,21 +1,21 @@
 #!/bin/bash
 
-# Run all YOLOv8 experiments
-echo "Starting YOLOv8 TI experiments..."
+# Run all YOLO8TI experiments
+echo "Starting YOLO8TI experiments..."
 
-echo "Running YOLOv8-N experiment..."
-bash ./yolov8ti_n.sh
+echo "Running YOLO8TI-N experiment..."
+bash ./trains/yolov8ti_n.sh
 
-echo "Running YOLOv8-S experiment..."
-bash ./yolov8ti_s.sh
+echo "Running YOLO8TI-S experiment..."
+bash ./trains/yolov8ti_s.sh
 
-echo "Running YOLOv8-M experiment..."
-bash ./yolov8ti_m.sh
+echo "Running YOLO8TI-M experiment..."
+bash ./trains/yolov8ti_m.sh
 
-echo "Running YOLOv8-L experiment..."
-bash ./yolov8ti_l.sh
+echo "Running YOLO8TI-L experiment..."
+bash ./trains/yolov8ti_l.sh
 
-echo "Running YOLOv8-X experiment..."
-bash ./yolov8ti_x.sh
+echo "Running YOLO8TI-X experiment..."
+bash ./trains/yolov8ti_x.sh
 
-echo "All YOLOv8 TI experiments completed!" 
+echo "All YOLO8TI experiments completed!"

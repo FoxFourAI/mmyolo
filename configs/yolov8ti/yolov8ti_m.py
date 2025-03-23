@@ -11,8 +11,9 @@ model = dict(
 # Fast experiment settings
 img_scale = (640, 640)  # smaller image size for faster training
 train_batch_size_per_gpu = 1
-max_epochs = 1  # just 1 epoch
-val_interval = 1  # validate after each epoch
+max_epochs = 30  # just 1 epoch
+num_samples = 10 * train_batch_size_per_gpu
+val_interval = 10  # validate after each epoch
 save_epoch_intervals = 1  # save checkpoint after each epoch
 close_mosaic_epochs = 0  # disable mosaic augmentation completely for speed
 
@@ -23,7 +24,7 @@ train_dataloader = dict(
     persistent_workers=False,  # disable persistent workers for speed
     # Limit dataset to only 10 iterations worth of data
     dataset=dict(
-        indices=range(10 * train_batch_size_per_gpu)  # Process only 10 images in total
+        indices=range(num_samples)  # Process only 10 images in total
     )
 )
 
@@ -37,4 +38,5 @@ val_dataloader = dict(
     )
 )
 
-work_dir = '/datasets/romanv/projects/yolov8ti/yolov8ti-m-exp1' 
+work_dir = '/datasets/romanv/projects/yolov8ti/yolov8ti-m-exp1'
+train_cfg = dict(max_epochs=max_epochs, val_interval=val_interval)
