@@ -44,6 +44,9 @@ To train a specific model variant:
 # From project root
 cd /datasets/romanv/repos/mmyolo
 
+# Train Nano non-TI version
+./trains/yolov8_n.sh
+
 # Train Nano version
 ./trains/yolov8ti_n.sh
 
@@ -80,6 +83,9 @@ To export a specific model to ONNX format:
 # From project root
 cd /datasets/romanv/repos/mmyolo
 
+# Export Nano non-TI version
+./exports/yolov8_n.sh
+
 # Export Nano version
 ./exports/yolov8ti_n.sh
 
@@ -112,12 +118,14 @@ All models are exported with the following settings:
 - **Format**: ONNX
 - **Image Size**: 640×640
 - **Batch Size**: 1
+- **Device**: CPU
+- **ONNX Simplification**: Enabled
 - **ONNX Opset**: 11
 - **Pre-topk**: 1000
 - **Keep-topk**: 100
 - **IoU Threshold**: 0.65
 - **Score Threshold**: 0.25
-- **Export Type**: YOLOv8
+- **Export Type**: YOLOv5
 - **Model Surgery**: Level 2
 
 ## Output Checkpoints

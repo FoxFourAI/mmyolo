@@ -1,9 +1,9 @@
 #!/bin/bash
 cd $(dirname $(dirname $0))
 python projects/easydeploy/tools/export_onnx.py \
-    configs/yolov8ti/yolov8ti_n.py \
-    /datasets/romanv/projects/yolov8ti/yolov8ti-n-exp1/epoch_30.pth \
-    --work-dir /datasets/romanv/projects/yolov8ti/yolov8ti-n-exp1 \
+    configs/yolov8ti/yolov8_n.py \
+    /datasets/romanv/projects/yolov8ti/yolov8-n-exp1/epoch_30.pth \
+    --work-dir /datasets/romanv/projects/yolov8ti/yolov8-n-exp1 \
     --img-size 640 640 \
     --batch 1 \
     --device cpu \
