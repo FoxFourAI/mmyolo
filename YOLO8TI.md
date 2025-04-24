@@ -30,11 +30,24 @@ The model configurations use these default settings:
 
 - **Image Size**: 640×640
 - **Batch Size**: 1 per GPU
-- **Training**: Full COCO dataset
+- **Training**: Fast experiment with limited dataset
 - **Model Surgery**: Applied during training (level 2)
 - **Mixed Precision**: Enabled for faster training
 
 ## Running Training
+
+### Training Settings
+
+All training scripts use the following settings:
+- **Model Surgery**: Level 2 (optimized FX-based transformations)
+- **Base Config**: YOLOv8 with SyncBN
+- **Fast Training Mode**:
+  - Limited dataset size (10 samples per batch)
+  - 30 epochs
+  - Validation every 10 epochs
+  - Checkpoint saving every epoch
+  - Disabled mosaic augmentation
+  - Minimal data prefetch for speed
 
 ### Individual Model Training
 
@@ -43,9 +56,6 @@ To train a specific model variant:
 ```bash
 # From project root
 cd /datasets/romanv/repos/mmyolo
-
-# Train Nano non-TI version
-./trains/yolov8_n.sh
 
 # Train Nano version
 ./trains/yolov8ti_n.sh
@@ -62,6 +72,11 @@ cd /datasets/romanv/repos/mmyolo
 # Train Extra Large version
 ./trains/yolov8ti_x.sh
 ```
+
+Each training script:
+- Uses model surgery level 2 (`--model-surgery 2`)
+- Loads the appropriate configuration from `configs/yolov8ti/`
+- Saves outputs to the corresponding experiment directory
 
 ### Run All Model Variants
 
@@ -82,9 +97,6 @@ To export a specific model to ONNX format:
 ```bash
 # From project root
 cd /datasets/romanv/repos/mmyolo
-
-# Export Nano non-TI version
-./exports/yolov8_n.sh
 
 # Export Nano version
 ./exports/yolov8ti_n.sh
@@ -138,14 +150,39 @@ Checkpoints and logs will be saved to these directories:
 - Large: `/datasets/romanv/projects/yolov8ti/yolov8ti-l-exp1`
 - Extra Large: `/datasets/romanv/projects/yolov8ti/yolov8ti-x-exp1`
 
-## Customization
+## Training Configuration Details
 
-To modify these experiments:
+The training configuration includes:
 
-- Adjust image size: Change `img_scale` parameter
-- Adjust batch size: Change `train_batch_size_per_gpu` parameter
-- Change epochs: Modify `max_epochs` parameter (default is 500)
+- **Dataset Settings**:
+  ```python
+  train_dataloader = dict(
+      batch_size=1,
+      num_workers=0,  # Disabled for speed
+      persistent_workers=False,
+      dataset=dict(
+          indices=range(10)  # Process only 10 images total
+      )
+  )
+
+  val_dataloader = dict(
+      batch_size=1,
+      num_workers=0,
+      persistent_workers=False,
+      dataset=dict(
+          indices=range(5)  # Process only 5 images for validation
+      )
+  )
+  ```
+
+- **Training Parameters**:
+  ```python
+  max_epochs = 30
+  val_interval = 10
+  save_epoch_intervals = 1
+  close_mosaic_epochs = 0  # Disabled for speed
+  ```
 
 ## Model Surgery Details
 
-These configurations use model surgery level 2, which applies the optimized FX-based transformations to all model components. This makes the generated weights suitable for deployment. 
+These configurations use model surgery level 2, which applies the optimized FX-based transformations to all model components. This makes the generated weights suitable for deployment on TI devices. 

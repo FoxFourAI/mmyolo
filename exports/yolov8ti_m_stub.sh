@@ -1,10 +1,10 @@
 #!/bin/bash
 cd $(dirname $(dirname $0))
 python projects/easydeploy/tools/export_onnx.py \
-    configs/yolov8ti/yolov8_n.py \
-    /datasets/romanv/projects/yolov8ti/yolov8-n-exp1/epoch_30.pth \
-    --work-dir /datasets/romanv/projects/yolov8ti/yolov8-n-exp1 \
-    --img-size 640 640 \
+    configs/yolov8ti/yolov8ti_m.py \
+    /datasets/romanv/projects/yolov8ti/yolov8ti-m-exp1/epoch_30.pth \
+    --work-dir /datasets/romanv/projects/yolov8ti/yolov8ti-m-exp1-736x1280-model-only \
+    --img-size 736 1280 \
     --batch 1 \
     --device cpu \
     --simplify \
@@ -14,4 +14,4 @@ python projects/easydeploy/tools/export_onnx.py \
     --iou-threshold 0.65 \
     --score-threshold 0.25 \
     --export-type YOLOv5 \
-    --model-surgery 0
+    --model-surgery 2
