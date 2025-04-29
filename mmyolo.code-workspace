@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"name": "mmyolo",
+			"path": "/datasets/romanv/repos/mmyolo"
+		},
+		{
+			"name": "workdir",
+			"path": "/datasets/romanv/projects/yolov8ti/yolov8ti-m-768x1280-fast"
+		}
+	]
+}

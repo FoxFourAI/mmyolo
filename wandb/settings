@@ -1,0 +1,5 @@
+[default]
+entity = romanv-foxfour-ai
+project = yolov8
+base_url = https://api.wandb.ai
+
