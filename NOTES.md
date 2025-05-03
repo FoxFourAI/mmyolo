@@ -14,6 +14,7 @@ pip install albumentations==1.3.1
 pip install --no-input protobuf==3.20.2 onnx==1.14.0
 pip install onnx-simplifier
 pip install git+https://github.com/TexasInstruments/edgeai-modeloptimization.git@r9.1#subdirectory=torchmodelopt
+pip install onnxruntime==1.15.1
 ```
 
 ## Setup Wandb
