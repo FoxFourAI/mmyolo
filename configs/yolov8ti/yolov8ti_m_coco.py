@@ -12,7 +12,7 @@ model = dict(
 
 
 # Training settings - optimized for 16GB Tesla T4 with faster epochs
-img_scale = (736, 1280)  # Increased back to 768x1280
+img_scale = (736, 1280)  # Increased back to 736x1280
 train_batch_size_per_gpu = 12  # Increased batch size to 20
 val_batch_size_per_gpu = 12
 max_epochs = 200  # Total training epochs
@@ -22,13 +22,17 @@ close_mosaic_epochs = 15  # Disable mosaic augmentation for last 15 epochs
 
 # Limit number of images per epoch to make epochs complete faster
 # This substantially reduces iterations per epoch (e.g., from 39429 to 1000)
-samples_per_epoch = 20000  # Increased to 20000 images per epoch # 20000 means 20000/16 = 1250 iterations per epoch (2 minutes per 100 iterations)
+# samples_per_epoch = 20000  # Increased to 20000 images per epoch # 20000 means 20000/16 = 1250 iterations per epoch (2 minutes per 100 iterations)
 test_visualization_interval = 20 # 20 images
 
+# work_dir = 'checkpoints/yolov8ti-m-736x1280-coco'
+
 # 800 for quick testing
-# samples_per_epoch = 800 # / 16 = 50 iterations per epoch
+work_dir = 'checkpoints/yolov8ti-m-736x1280-coco-fast'
+samples_per_epoch = 800 # / 16 = 50 iterations per epoch
 # val_interval = 1
-# test_visualization_interval = 20 # would be same because 5000 / 16 = 250 iterations per epoch, dataset_size is constant for testing, so would be 12 images per epoch
+save_epoch_intervals = 1
+max_epochs = 5
 
 
 # Optimizer settings - using SGD which is compatible with YOLO framework
@@ -211,7 +215,6 @@ log_processor = dict(
     window_size=50,
     by_epoch=True)
 
-work_dir = '/datasets/romanv/projects/yolov8ti/yolov8ti-m-768x1280-fast'
 train_cfg = dict(
     max_epochs=max_epochs, 
     val_interval=val_interval,

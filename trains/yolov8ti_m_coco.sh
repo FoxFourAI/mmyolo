@@ -15,10 +15,10 @@ mkdir -p logs
 
 # Generate timestamp for log file
 TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
-LOG_FILE="logs/train_yolov8ti_m_coco_${TIMESTAMP}.log"
+LOG_FILE="logs/yolov8ti-m-736x1280-coco_${TIMESTAMP}.log"
 
 # Echo command being run
-echo "Starting training with YOLOv8-TI model on COCO dataset..."
+echo "Starting training with YOLOv8-TI-M (736x1280) model on COCO dataset..."
 echo "Log file: $LOG_FILE"
 
 # Run training with output logging to file
