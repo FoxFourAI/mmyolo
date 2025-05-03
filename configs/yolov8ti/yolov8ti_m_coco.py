@@ -10,17 +10,26 @@ model = dict(
     # Enable gradient checkpointing to save memory and allow larger image size
     data_preprocessor=dict(batch_augments=None))
 
+
 # Training settings - optimized for 16GB Tesla T4 with faster epochs
-img_scale = (768, 1280)  # Increased back to 768x1280
-train_batch_size_per_gpu = 16  # Increased batch size to 20
+img_scale = (736, 1280)  # Increased back to 768x1280
+train_batch_size_per_gpu = 12  # Increased batch size to 20
+val_batch_size_per_gpu = 12
 max_epochs = 200  # Total training epochs
 save_epoch_intervals = 5  # Save checkpoint every 5 epochs
-val_interval = 5  # Validate every 5 epochs
+val_interval = 5  # Validate every 1 epoch
 close_mosaic_epochs = 15  # Disable mosaic augmentation for last 15 epochs
 
 # Limit number of images per epoch to make epochs complete faster
 # This substantially reduces iterations per epoch (e.g., from 39429 to 1000)
-samples_per_epoch = 800  # Increased to 20000 images per epoch
+samples_per_epoch = 20000  # Increased to 20000 images per epoch # 20000 means 20000/16 = 1250 iterations per epoch (2 minutes per 100 iterations)
+test_visualization_interval = 20 # 20 images
+
+# 800 for quick testing
+# samples_per_epoch = 800 # / 16 = 50 iterations per epoch
+# val_interval = 1
+# test_visualization_interval = 20 # would be same because 5000 / 16 = 250 iterations per epoch, dataset_size is constant for testing, so would be 12 images per epoch
+
 
 # Optimizer settings - using SGD which is compatible with YOLO framework
 optim_wrapper = dict(
@@ -98,7 +107,7 @@ train_dataloader = dict(
 )
 
 val_dataloader = dict(
-    batch_size=20,  # For T4 GPU
+    batch_size=val_batch_size_per_gpu,  # For T4 GPU
     num_workers=4,  # Increased for faster validation
     persistent_workers=True,
     pin_memory=True,
@@ -161,11 +170,11 @@ default_hooks = dict(
         save_best='auto',
     ),
     sampler_seed=dict(type='DistSamplerSeedHook'),
-    # Visualization hook configuration (keep simple)
+    # Increase frequency of validation visualizations
     visualization=dict(
         type='mmdet.DetVisualizationHook',
-        draw=True,  # draw results on image
-        interval=50  # visualize every 50 iterations
+        draw=True,
+        interval=test_visualization_interval,  # Every 20 validation iterations (about 12-13 images per epoch)
     ),
 )
 

@@ -10,18 +10,34 @@ export CUDA_LAUNCH_BLOCKING=0  # Set to 0 for async CUDA operations
 export OMP_NUM_THREADS=1
 export MKL_NUM_THREADS=1
 
-# Pre-cache COCO dataset to RAM for faster training (if enough system RAM available)
-# echo "Pre-caching dataset for faster access..."
-# find /path/to/coco/dataset -type f -name "*.jpg" | xargs cat > /dev/null
+# Create logs directory if it doesn't exist
+mkdir -p logs
 
-# Run single GPU training with optimizations
-echo "Starting optimized training with large batch size..."
-python tools/train.py configs/yolov8ti/yolov8ti_m_coco.py \
-  --model-surgery 2 \
-  --amp \
-  --cfg-options train_dataloader.persistent_workers=True \
-  default_hooks.checkpoint.max_keep_ckpts=3
+# Generate timestamp for log file
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+LOG_FILE="logs/train_yolov8ti_m_coco_${TIMESTAMP}.log"
 
-# Note: For distributed training on multiple T4s (if available in future), uncomment below:
-# NUM_GPUS=1
-# bash tools/dist_train.sh configs/yolov8ti/yolov8ti_m_coco.py $NUM_GPUS --model-surgery 2 --amp
+# Echo command being run
+echo "Starting training with YOLOv8-TI model on COCO dataset..."
+echo "Log file: $LOG_FILE"
+
+# Run training with output logging to file
+{
+  echo "=== Training started at $(date) ==="
+  echo "Command: python tools/train.py configs/yolov8ti/yolov8ti_m_coco.py --model-surgery 2 --amp"
+  echo "=== Environment ==="
+  echo "CUDA_VISIBLE_DEVICES: $CUDA_VISIBLE_DEVICES"
+  echo "PYTHONPATH: $PYTHONPATH"
+  echo "OMP_NUM_THREADS: $OMP_NUM_THREADS"
+  echo "MKL_NUM_THREADS: $MKL_NUM_THREADS"
+  echo "=== Training output ==="
+
+  # Run single GPU training with optimizations
+  python tools/train.py configs/yolov8ti/yolov8ti_m_coco.py \
+    --model-surgery 2 \
+    --amp
+
+  echo "=== Training completed at $(date) ==="
+} 2>&1 | tee "$LOG_FILE"
+
+echo "Training completed. Log saved to: $LOG_FILE" 
