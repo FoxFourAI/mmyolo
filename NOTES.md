@@ -17,7 +17,7 @@ pip install git+https://github.com/TexasInstruments/edgeai-modeloptimization.git
 pip install onnxruntime==1.15.1
 ```
 
-## Setup Wandb
+## Setup WandB
 ```bash
 pip install wandb
 wandb init
@@ -28,7 +28,7 @@ wandb init
 python tools/misc/download_dataset.py --dataset-name coco2017 --unzip --delete
 ```
 ## Training
-Look to `configs/yolov8ti/yolov8ti_m_coco.py` for training settings.
+Look to `configs/yolov8ti/yolov8ti_m_coco.py` for training settings (currently: quick training for 5 epochs saved to `checkpoints/yolov8ti-m-736x1280-coco-fast`, edit by your preferences).
 ```bash
 bash trains/yolov8ti_m_coco.sh
 ```

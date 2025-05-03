@@ -22,11 +22,12 @@ close_mosaic_epochs = 15  # Disable mosaic augmentation for last 15 epochs
 
 # Limit number of images per epoch to make epochs complete faster
 # This substantially reduces iterations per epoch (e.g., from 39429 to 1000)
-# samples_per_epoch = 20000  # Increased to 20000 images per epoch # 20000 means 20000/16 = 1250 iterations per epoch (2 minutes per 100 iterations)
+samples_per_epoch = 20000  # Increased to 20000 images per epoch # 20000 means 20000/16 = 1250 iterations per epoch (2 minutes per 100 iterations)
 test_visualization_interval = 20 # 20 images
 
-# work_dir = 'checkpoints/yolov8ti-m-736x1280-coco'
+work_dir = 'checkpoints/yolov8ti-m-736x1280-coco'
 
+# COMMENTED FOR QUICK TRAINING
 # 800 for quick testing
 work_dir = 'checkpoints/yolov8ti-m-736x1280-coco-fast'
 samples_per_epoch = 800 # / 16 = 50 iterations per epoch
