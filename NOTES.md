@@ -47,10 +47,33 @@ checkpoints/yolov8ti-m-736x1280-coco-fast/epoch_3.prototxt
 checkpoints/yolov8ti-m-736x1280-coco-fast/epoch_3.onnx
 ```
 
+## Prepare Calibration Data
+```bash
+python projects/easydeploy/tools/prepare_calibration_data.py
+```
+
+Example of created files:
+```bash
+data/coco_calibration_data/images/000000000139.jpg
+data/coco_calibration_data/data.csv
+data/coco_calibration_data/coco_calibration_data.zip
+```
+
+## Visualize Calibration Data
+```bash
+python projects/easydeploy/tools/visualize_calibration_data.py
+```
+
+Example of created files:
+```bash
+data/coco_calibration_data/visualized_images/000000000139.jpg
+data/coco_calibration_data/visuals.zip
+```
+
 ## Prerequisites
 * System dependencies
 ```bash
 sudo apt update
 sudo apt install build-essential curl libbz2-dev libffi-dev liblzma-dev libncursesw5-dev libreadline-dev libsqlite3-dev libssl-dev libxml2-dev libxmlsec1-dev llvm make tk-dev wget xz-utils zlib1g-dev
 ```
-* Conda
+* conda (https://www.anaconda.com/docs/getting-started/miniconda/install)
